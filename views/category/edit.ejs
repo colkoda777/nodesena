@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Categoria</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f6f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            max-width: 600px;
+            width: 100%;
+            background-color: #ffffff;
+            padding: 20px 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #34495e;
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin: 8px 0 4px;
+            font-weight: bold;
+            color: #34495e;
+        }
+
+        input, textarea {
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #bdc3c7;
+            border-radius: 5px;
+            font-size: 1rem;
+            width: 100%;
+        }
+
+        input:focus, textarea:focus {
+            border-color: #3498db;
+            outline: none;
+            box-shadow: 0 0 5px rgba(52, 152, 219, 0.5);
+        }
+
+        button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            width: 100%;
+        }
+
+        button:hover {
+            background-color: #2471a3;
+        }
+
+        .error {
+            color: #e74c3c;
+            font-size: 0.9em;
+            margin-bottom: 10px;
+        }
+
+        .alert {
+            margin-top: 15px;
+            padding: 10px;
+            border-radius: 5px;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+
+        .alert.success {
+            color: #2ecc71;
+            background-color: #d4efdf;
+            border: 1px solid #27ae60;
+        }
+
+        .alert.error {
+            color: #e74c3c;
+            background-color: #f9d6d5;
+            border: 1px solid #c0392b;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Editar Categoria</h1>
+
+        <form action="/api/category/<%= categoria.id_categoria %>?_method=PUT" method="POST" onsubmit="return validateForm()">
+            <input type="hidden" name="_method" value="PUT">
+
+            <label for="id_categoria">Id Categoría:</label>
+            <input type="number" id="id_categoria" name="id_categoria" value="<%= categoria.id_categoria %>" readonly>
+
+            <label for="nombre">Nombre:</label>
+            <input type="text" id="nombre" name="nombre" value="<%= categoria.nombre || '' %>" required>
+
+            <label for="descripcion">Descripción:</label>
+            <textarea id="descripcion" name="descripcion" rows="4" required><%= categoria.descripcion || '' %></textarea>
+
+            <button type="submit">Actualizar Categoría</button>
+
+            <!-- Mensajes de error o éxito -->
+            <div id="alert-message" class="alert" style="display: none;"></div>
+        </form>
+    </div>
+
+    <script>
+        function validateForm() {
+            const nombre = document.getElementById('nombre').value;
+            const descripcion = document.getElementById('descripcion').value;
+
+            // Verifica si los campos son vacíos
+            if (nombre.trim() === '' || descripcion.trim() === '') {
+                displayAlert('Por favor, completa todos los campos.', 'error');
+                return false; // Evita el envío del formulario
+            }
+            return true; // El formulario puede enviarse
+        }
+
+        function displayAlert(message, type) {
+            const alertMessage = document.getElementById('alert-message');
+            alertMessage.style.display = 'block';
+            alertMessage.textContent = message;
+            alertMessage.className = `alert ${type}`;
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalles de Factura</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f6f9; /* Fondo gris claro */
+            color: #2c3e50; /* Azul oscuro */
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            border: 1px solid #bdc3c7; /* Borde gris claro */
+            border-radius: 10px;
+            background-color: #ffffff; /* Fondo blanco */
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+        }
+
+        h1 {
+            text-align: center;
+            color: #2980b9; /* Azul moderno */
+        }
+
+        .field {
+            margin-bottom: 20px;
+        }
+
+        .label {
+            font-weight: bold;
+            font-size: 1rem;
+            color: #34495e; /* Gris oscuro */
+        }
+
+        .value {
+            margin-top: 5px;
+            font-size: 1.1rem;
+            color: #2c3e50; /* Azul oscuro */
+        }
+
+        .actions {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        button {
+            background-color: #3498db; /* Azul profesional */
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #2471a3; /* Azul más oscuro */
+        }
+
+        .btn-eliminar {
+            background-color: #e74c3c; /* Rojo profesional */
+        }
+
+        .btn-eliminar:hover {
+            background-color: #c0392b; /* Rojo más oscuro */
+        }
+
+        .btn-regresar {
+            background-color: #27ae60; /* Verde profesional */
+        }
+
+        .btn-regresar:hover {
+            background-color: #219150; /* Verde más oscuro */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Detalles de Factura</h1>
+        <div class="field">
+            <div class="label">Número de Factura:</div>
+            <div class="value"><%= factura.num_factura %></div>
+        </div>
+        
+        <div class="field">
+            <div class="label">Fecha:</div>
+            <div class="value"><%= new Date(factura.fecha).toLocaleDateString() %></div>
+        </div>
+
+        <div class="field">
+            <div class="label">Número de Pago:</div>
+            <div class="value"><%= factura.num_pago %></div>
+        </div>
+
+        <div class="actions">
+            <!-- Botón para regresar -->
+            <a href="/api/bill">
+                <button class="btn-regresar">Regresar</button>
+            </a>
+            <!-- Botón para eliminar -->
+            <form action="/api/bill/<%= factura.num_factura %>?_method=DELETE" method="POST" onsubmit="return confirm('¿Estás seguro de eliminar esta factura?');">
+                <button type="submit" class="btn-eliminar">Eliminar</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

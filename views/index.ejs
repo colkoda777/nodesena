@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Página Principal</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f6f9; /* Fondo gris claro */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .container {
+      text-align: center;
+      max-width: 500px;
+      width: 100%;
+      padding: 20px 30px;
+      border-radius: 10px;
+      background-color: #ffffff; /* Fondo blanco */
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    }
+
+    h1 {
+      color: #34495e; /* Gris oscuro */
+      margin-bottom: 20px;
+    }
+
+    .links {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      margin-top: 20px;
+    }
+
+    a {
+      text-decoration: none;
+      color: white;
+      background-color: #3498db; /* Azul profesional */
+      padding: 10px 20px;
+      border-radius: 5px;
+      font-size: 1rem;
+      font-weight: bold;
+      transition: background-color 0.3s ease;
+    }
+
+    a:hover {
+      background-color: #2471a3; /* Azul más oscuro */
+    }
+
+    a.logout {
+      background-color: #e74c3c; /* Rojo para cerrar sesión */
+    }
+
+    a.logout:hover {
+      background-color: #c0392b; /* Rojo más oscuro */
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Bienvenido a la Gestión de Clientes</h1>
+
+    <!-- Botones de navegación -->
+    <div class="links">
+      <a href="/api/client">Ver Clientes</a>
+      <a href="/api/bill">Ver Facturas</a>
+      <a href="/api/category">Ver Categorías</a>
+      <a href="/api/product">Ver Productos</a>
+      <a href="/auth/logout" class="logout">Cerrar Sesión</a>
+    </div>
+  </div>
+</body>
+</html>

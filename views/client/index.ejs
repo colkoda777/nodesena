@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Clientes</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f6f9; /* Fondo gris claro */
+      color: #2c3e50; /* Azul oscuro */
+    }
+
+    h1 {
+      text-align: center;
+      margin: 20px 0;
+    }
+
+    table {
+      width: 90%;
+      margin: 20px auto;
+      border-collapse: collapse;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+      background-color: #ffffff; /* Fondo blanco */
+    }
+
+    th, td {
+      padding: 12px 15px;
+      text-align: center;
+      border: 1px solid #bdc3c7; /* Borde gris claro */
+    }
+
+    th {
+      background-color: #2980b9; /* Azul moderno */
+      color: white;
+      font-weight: bold;
+    }
+
+    tr:nth-child(even) {
+      background-color: #f2f2f2; /* Gris claro alternado */
+    }
+
+    tr:hover {
+      background-color: #eaf2f8; /* Azul muy claro al pasar el cursor */
+    }
+
+    button, .btn-editar, .btn-ver, .btn-eliminar {
+      background-color: #3498db; /* Azul profesional */
+      color: white;
+      border: none;
+      padding: 8px 12px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background-color 0.3s ease;
+      margin-right: 5px;
+    }
+
+    button:hover, .btn-editar:hover, .btn-ver:hover, .btn-eliminar:hover {
+      background-color: #2471a3; /* Azul más oscuro en hover */
+    }
+
+    .btn-eliminar {
+      background-color: #e74c3c; /* Rojo profesional */
+    }
+
+    .btn-eliminar:hover {
+      background-color: #c0392b; /* Rojo más oscuro */
+    }
+
+    .btn-editar {
+      background-color: #f39c12; /* Amarillo profesional */
+    }
+
+    .btn-editar:hover {
+      background-color: #e67e22; /* Amarillo más oscuro */
+    }
+
+    .btn-ver {
+      background-color: #2ecc71; /* Verde profesional */
+    }
+
+    .btn-ver:hover {
+      background-color: #27ae60; /* Verde más oscuro */
+    }
+
+    .crear-factura {
+      display: block;
+      text-align: center;
+      margin: 20px auto;
+      width: fit-content;
+      padding: 10px 20px;
+      background-color: #27ae60; /* Verde profesional */
+      color: white;
+      font-weight: bold;
+      text-decoration: none;
+      border-radius: 5px;
+      transition: background-color 0.3s ease;
+    }
+
+    .crear-factura:hover {
+      background-color: #219150; /* Verde más oscuro */
+    }
+  </style>
+</head>
+<body>
+  <h1>Listado de Clientes</h1>
+
+  <table>
+    <tr>
+      <th>Cedula</th>
+      <th>Nombre</th>
+      <th>Apellido</th>
+      <th>Email</th>
+      <th>Acciones</th>
+    </tr>
+    <% clientes.forEach(cliente => { %>
+      <tr>
+        <td><%= cliente.id_client %></td>
+        <td><%= cliente.nombre %></td>
+        <td><%= cliente.apellido %></td>
+        <td><%= cliente.email %></td>
+        <td>
+         
+           <!-- Botón para ver detalles -->
+           <form action="/api/client/<%= cliente.id_client %>" method="GET" style="display:inline;">
+            <button type="submit">Ver Detalles</button>
+          </form>
+          <!-- Botón para editar factura -->
+          <form action="/api/client/<%= cliente.id_client %>/edit" method="GET" style="display:inline;">
+            <button type="submit">Editar</button>
+          </form>
+
+          <form action="/api/client/<%= cliente.id_client %>?_method=DELETE" method="POST" style="display:inline;">
+            <button type="submit" class="btn-eliminar">Eliminar</button>
+          </form>
+        </td>
+      </tr>
+    <% }) %>
+  </table>
+
+  <a href="client/create" class="crear-factura">Crear nuevo cliente</a>
+</body>
+</html>

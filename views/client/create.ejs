@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Crear Cliente</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f6f9;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+    .container {
+      background-color: #ffffff;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      padding: 30px 25px;
+      width: 100%;
+      max-width: 500px;
+      box-sizing: border-box;
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+      font-size: 1.8em;
+      color: #2c3e50;
+    }
+    label {
+      font-weight: bold;
+      margin-top: 10px;
+      display: block;
+      color: #34495e;
+    }
+    input, select, button {
+      width: 100%;
+      padding: 12px;
+      margin: 8px 0;
+      border: 1px solid #bdc3c7;
+      border-radius: 6px;
+      font-size: 1rem;
+      box-sizing: border-box;
+    }
+    input:focus, select:focus {
+      border-color: #3498db;
+      outline: none;
+      box-shadow: 0 0 5px rgba(52, 152, 219, 0.5);
+    }
+    button {
+      background-color: #2980b9;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      border: none;
+      margin-top: 10px;
+    }
+    button:hover {
+      background-color: #2471a3;
+    }
+    .error {
+      color: #e74c3c;
+      font-size: 0.85em;
+      margin-top: -6px;
+      margin-bottom: 8px;
+    }
+    .form-group {
+      margin-bottom: 20px;
+    }
+    .back-link {
+      display: block;
+      width: 200px;
+      margin: 30px auto;
+      text-align: center;
+      background-color: #3498db;
+      color: white;
+      padding: 12px;
+      border-radius: 5px;
+      font-size: 1rem;
+      font-weight: bold;
+      text-decoration: none;
+    }
+    .back-link:hover {
+      background-color: #2471a3;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>Crear Cliente</h1>
+
+    <form action="/api/client" method="POST" onsubmit="return validateForm()">
+      <div class="form-group">
+        <label for="id_client">ID Cliente:</label>
+        <input type="number" id="id_client" name="id_client" required pattern="\d+" title="Debe ser un número entero" minlength="5" max="99999">
+        <div class="error" id="id_client_error"></div>
+      </div>
+
+      <div class="form-group">
+        <label for="nombre">Nombre:</label>
+        <input type="text" id="nombre" name="nombre" required minlength="3" pattern="[A-Za-z\s]+" title="Solo se permiten letras y espacios">
+        <div class="error" id="nombre_error"></div>
+      </div>
+
+      <div class="form-group">
+        <label for="apellido">Apellido:</label>
+        <input type="text" id="apellido" name="apellido" required minlength="3" pattern="[A-Za-z\s]+" title="Solo se permiten letras y espacios">
+        <div class="error" id="apellido_error"></div>
+      </div>
+
+      <div class="form-group">
+        <label for="direccion">Dirección:</label>
+        <input type="text" id="direccion" name="direccion" required minlength="5" title="La dirección debe tener al menos 5 caracteres">
+        <div class="error" id="direccion_error"></div>
+      </div>
+
+      <div class="form-group">
+        <label for="fecha_nacimiento">Fecha de Nacimiento:</label>
+        <input type="date" id="fecha_nacimiento" name="fecha_nacimiento" required>
+        <div class="error" id="fecha_nacimiento_error"></div>
+      </div>
+
+      <div class="form-group">
+        <label for="telefono">Teléfono:</label>
+        <input type="tel" id="telefono" name="telefono" required pattern="[0-9]{10}" title="Debe tener 10 dígitos">
+        <div class="error" id="telefono_error"></div>
+      </div>
+
+      <div class="form-group">
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+        <div class="error" id="email_error"></div>
+      </div>
+
+      <button type="submit">Crear Cliente</button>
+    </form>
+
+    <a href="/api/client" class="back-link">Volver a la lista de Clientes</a>
+  </div>
+
+  <script>
+    function validateForm() {
+      let isValid = true;
+
+      // Reset error messages
+      document.querySelectorAll('.error').forEach(errorDiv => errorDiv.textContent = '');
+
+      // Validate ID Cliente
+      const idClient = document.getElementById('id_client').value;
+      if (!idClient.match(/^\d+$/) || idClient.length < 5 || idClient > 99999) {
+        document.getElementById('id_client_error').textContent = 'El ID Cliente debe ser un número de al menos 5 dígitos.';
+        isValid = false;
+      }
+
+      // Validate Nombre
+      const nombre = document.getElementById('nombre').value;
+      if (!nombre.match(/^[A-Za-z\s]+$/) || nombre.length < 3) {
+        document.getElementById('nombre_error').textContent = 'El nombre debe tener al menos 3 caracteres y solo contener letras y espacios.';
+        isValid = false;
+      }
+
+      // Validate Apellido
+      const apellido = document.getElementById('apellido').value;
+      if (!apellido.match(/^[A-Za-z\s]+$/) || apellido.length < 3) {
+        document.getElementById('apellido_error').textContent = 'El apellido debe tener al menos 3 caracteres y solo contener letras y espacios.';
+        isValid = false;
+      }
+
+      // Validate Dirección
+      const direccion = document.getElementById('direccion').value;
+      if (direccion.length < 5) {
+        document.getElementById('direccion_error').textContent = 'La dirección debe tener al menos 5 caracteres.';
+        isValid = false;
+      }
+
+      // Validate Fecha de Nacimiento
+      const fechaNacimiento = document.getElementById('fecha_nacimiento').value;
+      if (!fechaNacimiento) {
+        document.getElementById('fecha_nacimiento_error').textContent = 'La fecha de nacimiento es obligatoria.';
+        isValid = false;
+      }
+
+      // Validate Teléfono
+      const telefono = document.getElementById('telefono').value;
+      if (!telefono.match(/^[0-9]{10}$/)) {
+        document.getElementById('telefono_error').textContent = 'El teléfono debe contener exactamente 10 dígitos.';
+        isValid = false;
+      }
+
+      // Validate Email
+      const email = document.getElementById('email').value;
+      const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!email.match(emailPattern)) {
+        document.getElementById('email_error').textContent = 'Por favor ingresa un correo electrónico válido.';
+        isValid = false;
+      }
+
+      return isValid;
+    }
+  </script>
+
+</body>
+</html>

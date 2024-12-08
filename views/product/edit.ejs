@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Producto</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f6f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        form {
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            padding: 30px 25px;
+            width: 100%;
+            max-width: 400px;
+            box-sizing: border-box;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+            color: #2c3e50;
+        }
+        label {
+            font-weight: bold;
+            margin-top: 10px;
+            display: block;
+            color: #34495e;
+        }
+        input, button {
+            width: calc(100% - 10px);
+            padding: 12px;
+            margin: 8px 0;
+            border: 1px solid #bdc3c7;
+            border-radius: 6px;
+            font-size: 1rem;
+            box-sizing: border-box;
+        }
+        input:focus {
+            border-color: #3498db;
+            outline: none;
+            box-shadow: 0 0 5px rgba(52, 152, 219, 0.5);
+        }
+        button {
+            background-color: #2980b9;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            border: none;
+        }
+        button:hover {
+            background-color: #2471a3;
+        }
+        .error {
+            color: #e74c3c;
+            font-size: 0.85em;
+            margin-top: -6px;
+            margin-bottom: 8px;
+        }
+    </style>
+</head>
+<body>
+    <form id="editarProductoForm" action="/api/product/<%= producto.id_producto %>?_method=PUT" method="POST">
+        <h1>Editar Producto</h1>
+
+        <input type="hidden" name="_method" value="PUT">
+
+        <label for="id_producto">Id Producto</label>
+        <input type="number" id="id_producto" name="id_producto" value="<%= producto.id_producto %>" readonly>
+
+        <label for="nombre">Nombre</label>
+        <input type="text" id="nombre" name="nombre" value="<%= producto.nombre %>" required>
+        <div class="error" id="errorNombre"></div>
+
+        <label for="precio">Precio</label>
+        <input type="number" id="precio" name="precio" step="0.01" value="<%= producto.precio %>" required>
+        <div class="error" id="errorPrecio"></div>
+
+        <label for="stock">Stock</label>
+        <input type="number" id="stock" name="stock" value="<%= producto.stock %>" required>
+        <div class="error" id="errorStock"></div>
+
+        <label for="id_categoria">Id Categoría</label>
+        <input type="number" id="id_categoria" name="id_categoria" value="<%= producto.id_categoria %>" required>
+        <div class="error" id="errorIdCategoria"></div>
+
+        <button type="submit">Actualizar Producto</button>
+    </form>
+
+    <script>
+        document.getElementById('editarProductoForm').addEventListener('submit', function (event) {
+            // Limpia mensajes de error
+            document.querySelectorAll('.error').forEach(e => e.textContent = '');
+
+            // Validaciones personalizadas
+            let valid = true;
+            const nombre = document.getElementById('nombre').value.trim();
+            const precio = document.getElementById('precio').value;
+            const stock = document.getElementById('stock').value;
+            const idCategoria = document.getElementById('id_categoria').value;
+
+            if (!nombre) {
+                document.getElementById('errorNombre').textContent = "El nombre es obligatorio.";
+                valid = false;
+            }
+
+            if (!precio || precio <= 0) {
+                document.getElementById('errorPrecio').textContent = "El precio debe ser mayor a 0.";
+                valid = false;
+            }
+
+            if (!stock || stock < 0) {
+                document.getElementById('errorStock').textContent = "El stock no puede ser negativo.";
+                valid = false;
+            }
+
+            if (!idCategoria || idCategoria <= 0) {
+                document.getElementById('errorIdCategoria').textContent = "El ID de la categoría debe ser mayor a 0.";
+                valid = false;
+            }
+
+            // Si no pasa las validaciones, evita el envío
+            if (!valid) {
+                event.preventDefault();
+                alert("Por favor corrija los errores antes de enviar el formulario.");
+                return;
+            }
+
+            // Confirmación de envío
+            const confirmacion = confirm("¿Está seguro de que desea actualizar este producto?");
+            if (!confirmacion) {
+                event.preventDefault();
+            }
+        });
+    </script>
+</body>
+</html>

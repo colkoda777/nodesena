@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalles de Categoría</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f6f9; /* Fondo gris claro */
+            color: #2c3e50; /* Azul oscuro */
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            border: 1px solid #bdc3c7; /* Borde gris claro */
+            border-radius: 10px;
+            background-color: #ffffff; /* Fondo blanco */
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+        }
+
+        h1 {
+            text-align: center;
+            color: #2980b9; /* Azul moderno */
+        }
+
+        .field {
+            margin-bottom: 20px;
+        }
+
+        .label {
+            font-weight: bold;
+            font-size: 1rem;
+            color: #34495e; /* Gris oscuro */
+        }
+
+        .value {
+            margin-top: 5px;
+            font-size: 1.1rem;
+            color: #2c3e50; /* Azul oscuro */
+        }
+
+        .actions {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .btn-regresar {
+            text-decoration: none;
+            background-color: #3498db; /* Azul profesional */
+            color: white;
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: bold;
+            text-align: center;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            border: none;
+            cursor: pointer;
+            display: inline-block;
+        }
+
+        .btn-regresar:hover {
+            background-color: #2471a3; /* Azul más oscuro */
+            transform: scale(1.05); /* Efecto de zoom al pasar el cursor */
+        }
+
+        .btn-regresar:active {
+            transform: scale(0.95); /* Efecto de pulsación */
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Detalles de Categoría</h1>
+
+        <div class="field">
+            <div class="label">ID Categoría:</div>
+            <div class="value"><%= categoria.id_categoria %></div>
+        </div>
+
+        <div class="field">
+            <div class="label">Nombre:</div>
+            <div class="value"><%= categoria.nombre %></div>
+        </div>
+
+        <div class="field">
+            <div class="label">Descripción:</div>
+            <div class="value"><%= categoria.descripcion %></div>
+        </div>
+
+        <div class="actions">
+            <a href="/api/category" class="btn-regresar">Regresar</a>
+        </div>
+    </div>
+
+</body>
+</html>

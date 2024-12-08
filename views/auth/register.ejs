@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f6f9; /* Fondo gris claro */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            max-width: 400px;
+            width: 100%;
+            background-color: #ffffff; /* Fondo blanco */
+            padding: 20px 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Sombra suave */
+        }
+
+        h2 {
+            text-align: center;
+            color: #34495e; /* Gris oscuro */
+            margin-bottom: 20px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        input {
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #bdc3c7; /* Gris claro */
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        input:focus {
+            border-color: #3498db; /* Azul profesional */
+            outline: none;
+            box-shadow: 0 0 5px rgba(52, 152, 219, 0.5);
+        }
+
+        button {
+            background-color: #3498db; /* Azul profesional */
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #2471a3; /* Azul más oscuro */
+        }
+
+        p {
+            text-align: center;
+            margin-top: 10px;
+            font-size: 0.9rem;
+        }
+
+        p a {
+            color: #3498db; /* Azul profesional */
+            text-decoration: none;
+        }
+
+        p a:hover {
+            text-decoration: underline;
+        }
+
+        .alert {
+            margin-top: 15px;
+            padding: 10px;
+            border-radius: 5px;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+
+        .alert.success {
+            color: #2ecc71; /* Verde profesional */
+            background-color: #d4efdf; /* Fondo verde claro */
+            border: 1px solid #27ae60;
+        }
+
+        .alert.error {
+            color: #e74c3c; /* Rojo profesional */
+            background-color: #f9d6d5; /* Fondo rojo claro */
+            border: 1px solid #c0392b;
+        }
+
+        .back-button {
+            background-color: #757979; /* Gris para el botón de regreso */
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            display: block;
+            width: 100%;
+            margin-top: 20px;
+            text-align: center;
+            transition: background-color 0.3s ease;
+        }
+
+        .back-button:hover {
+            background-color: #7f8c8d; /* Gris más oscuro al pasar el ratón */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Registro</h2>
+        <form action="/auth/register" method="POST"> <!-- Asegúrate de que la ruta sea consistente con tu configuración -->
+            <input type="text" name="username" placeholder="Usuario" required />
+            <input type="password" name="password" placeholder="Contraseña" required />
+            <button type="submit">Registrarse</button>
+        </form>
+
+        <!-- Mostrar mensajes de éxito o error -->
+        <% if (message) { %>
+            <div class="alert success"><%= message %></div>
+        <% } %>
+        <% if (error) { %>
+            <div class="alert error"><%= error %></div>
+        <% } %>
+
+        <!-- Botón para volver al login -->
+        <button class="back-button" onclick="window.location.href='/auth/login'">Volver al Login</button>
+    </div>
+</body>
+</html>

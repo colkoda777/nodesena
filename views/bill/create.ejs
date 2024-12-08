@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crear Factura</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f6f9; /* Fondo gris claro */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        form {
+            background-color: #ffffff; /* Fondo blanco */
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+            padding: 30px 25px;
+            width: 100%;
+            max-width: 400px;
+            box-sizing: border-box;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+            color: #2c3e50; /* Azul oscuro */
+        }
+        label {
+            font-weight: bold;
+            margin-top: 10px;
+            display: block;
+            color: #34495e; /* Gris azulado */
+        }
+        input, select, button {
+            width: calc(100% - 10px);
+            padding: 12px;
+            margin: 8px 0;
+            border: 1px solid #bdc3c7; /* Borde gris claro */
+            border-radius: 6px;
+            font-size: 1rem;
+            box-sizing: border-box;
+        }
+        input:focus, select:focus {
+            border-color: #3498db; /* Azul profesional */
+            outline: none;
+            box-shadow: 0 0 5px rgba(52, 152, 219, 0.5); /* Sombra azul */
+        }
+        button {
+            background-color: #2980b9; /* Azul moderno */
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            border: none;
+        }
+        button:hover {
+            background-color: #2471a3; /* Azul más oscuro en hover */
+        }
+        .error {
+            color: #e74c3c; /* Rojo profesional */
+            font-size: 0.85em;
+            margin-top: -6px;
+            margin-bottom: 8px;
+        }
+    </style>
+</head>
+<body>
+    <form id="facturaForm" action="/api/bill" method="POST">
+        <h1>Crear Factura</h1>
+        
+        <label for="num_factura">Número de Factura:</label>
+        <input type="number" id="num_factura" name="num_factura" required>
+        <div class="error" id="errorNumFactura"></div>
+
+        <label for="id_cliente">Seleccionar Cliente:</label>
+        <select id="id_cliente" name="id_cliente" required>
+            <option value="" disabled selected>Seleccione un cliente</option>
+            <% clientes.forEach(cliente => { %>
+                <option value="<%= cliente.id_client %>">
+                    <%= cliente.nombre %> <%= cliente.apellido %> (ID: <%= cliente.id_client %>)
+                </option>
+            <% }) %>
+        </select>
+        <div class="error" id="errorCliente"></div>
+
+        <label for="fecha">Fecha:</label>
+        <input type="date" id="fecha" name="fecha" required>
+        <div class="error" id="errorFecha"></div>
+
+        <label for="num_pago">Número de Pago:</label>
+        <input type="number" id="num_pago" name="num_pago" required>
+        <div class="error" id="errorNumPago"></div>
+
+        <button type="submit">Crear Factura</button>
+    </form>
+
+    <script>
+        document.getElementById('facturaForm').addEventListener('submit', function (event) {
+            // Limpia mensajes de error
+            document.querySelectorAll('.error').forEach(e => e.textContent = '');
+
+            // Validaciones personalizadas
+            let valid = true;
+            const numFactura = document.getElementById('num_factura').value;
+            const idCliente = document.getElementById('id_cliente').value;
+            const fecha = document.getElementById('fecha').value;
+            const numPago = document.getElementById('num_pago').value;
+
+            if (!numFactura || numFactura <= 0) {
+                document.getElementById('errorNumFactura').textContent = "El número de factura debe ser mayor a 0.";
+                valid = false;
+            }
+
+            if (!idCliente) {
+                document.getElementById('errorCliente').textContent = "Debe seleccionar un cliente.";
+                valid = false;
+            }
+
+            if (!fecha) {
+                document.getElementById('errorFecha').textContent = "La fecha es obligatoria.";
+                valid = false;
+            }
+
+            if (!numPago || numPago <= 0) {
+                document.getElementById('errorNumPago').textContent = "El número de pago debe ser mayor a 0.";
+                valid = false;
+            }
+
+            // Si no pasa las validaciones, evita el envío
+            if (!valid) {
+                event.preventDefault();
+                alert("Por favor corrija los errores antes de enviar el formulario.");
+                return;
+            }
+
+            // Confirmación de envío
+            const confirmacion = confirm("¿Está seguro de que desea crear esta factura?");
+            if (!confirmacion) {
+                event.preventDefault();
+            }
+        });
+    </script>
+</body>
+</html>

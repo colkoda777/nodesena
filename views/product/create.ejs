@@ -1,0 +1,160 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crear producto</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f6f9; /* Fondo gris claro */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        form {
+            background-color: #ffffff; /* Fondo blanco */
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+            padding: 30px 25px;
+            width: 100%;
+            max-width: 400px;
+            box-sizing: border-box;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+            color: #2c3e50; /* Azul oscuro */
+        }
+        label {
+            font-weight: bold;
+            margin-top: 10px;
+            display: block;
+            color: #34495e; /* Gris azulado */
+        }
+        input, select, button {
+            width: calc(100% - 10px);
+            padding: 12px;
+            margin: 8px 0;
+            border: 1px solid #bdc3c7; /* Borde gris claro */
+            border-radius: 6px;
+            font-size: 1rem;
+            box-sizing: border-box;
+        }
+        input:focus, select:focus {
+            border-color: #3498db; /* Azul profesional */
+            outline: none;
+            box-shadow: 0 0 5px rgba(52, 152, 219, 0.5); /* Sombra azul */
+        }
+        button {
+            background-color: #2980b9; /* Azul moderno */
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            border: none;
+        }
+        button:hover {
+            background-color: #2471a3; /* Azul más oscuro en hover */
+        }
+        .error {
+            color: #e74c3c; /* Rojo profesional */
+            font-size: 0.85em;
+            margin-top: -6px;
+            margin-bottom: 8px;
+        }
+    </style>
+</head>
+<body>
+    <form id="productoForm" action="/api/product" method="POST">
+        <h1>Crear producto</h1>
+
+        <label for="id_producto">Id Producto:</label>
+        <input type="number" id="id_producto" name="id_producto" required>
+        <div class="error" id="errorIdProducto"></div>
+
+        <label for="nombre">Nombre:</label>
+        <input type="text" id="nombre" name="nombre" required>
+        <div class="error" id="errorNombre"></div>
+
+        <label for="precio">Precio:</label>
+        <input type="number" id="precio" name="precio" required>
+        <div class="error" id="errorPrecio"></div>
+
+        <label for="stock">Stock:</label>
+        <input type="number" id="stock" name="stock" required>
+        <div class="error" id="errorStock"></div>
+
+        <label for="id_categoria">Seleccione una Categoría:</label>
+        <select id="id_categoria" name="id_categoria" required>
+            <option value="" disabled selected>Seleccione una categoría</option>
+            <% categorias.forEach(categoria => { %>
+                <option value="<%= categoria.id_categoria %>">
+                    <%= categoria.nombre %> (ID: <%= categoria.id_categoria %>)
+                </option>
+            <% }) %>
+        </select>
+        <div class="error" id="errorCategoria"></div>
+
+        <button type="submit">Crear producto</button>
+    </form>
+
+    <script>
+        document.getElementById('productoForm').addEventListener('submit', function (event) {
+            // Limpia mensajes de error
+            document.querySelectorAll('.error').forEach(e => e.textContent = '');
+
+            // Validaciones personalizadas
+            let valid = true;
+            const idProducto = document.getElementById('id_producto').value;
+            const nombre = document.getElementById('nombre').value;
+            const precio = document.getElementById('precio').value;
+            const stock = document.getElementById('stock').value;
+            const idCategoria = document.getElementById('id_categoria').value;
+
+            if (!idProducto || idProducto <= 0) {
+                document.getElementById('errorIdProducto').textContent = "El ID del producto debe ser mayor a 0.";
+                valid = false;
+            }
+
+            if (!nombre) {
+                document.getElementById('errorNombre').textContent = "El nombre del producto es obligatorio.";
+                valid = false;
+            }
+
+            if (!precio || precio <= 0) {
+                document.getElementById('errorPrecio').textContent = "El precio debe ser mayor a 0.";
+                valid = false;
+            }
+
+            if (!stock || stock <= 0) {
+                document.getElementById('errorStock').textContent = "El stock debe ser mayor a 0.";
+                valid = false;
+            }
+
+            if (!idCategoria) {
+                document.getElementById('errorCategoria').textContent = "Debe seleccionar una categoría.";
+                valid = false;
+            }
+
+            // Si no pasa las validaciones, evita el envío
+            if (!valid) {
+                event.preventDefault();
+                alert("Por favor corrija los errores antes de enviar el formulario.");
+                return;
+            }
+
+            // Confirmación de envío
+            const confirmacion = confirm("¿Está seguro de que desea crear este producto?");
+            if (!confirmacion) {
+                event.preventDefault();
+            }
+        });
+    </script>
+</body>
+</html>

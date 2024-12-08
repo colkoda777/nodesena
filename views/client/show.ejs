@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalle del Cliente</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            background-color: #f9f9f9;
+        }
+        h1 {
+            text-align: center;
+        }
+        .field {
+            margin-bottom: 15px;
+        }
+        .label {
+            font-weight: bold;
+        }
+        .value {
+            margin-top: 5px;
+        }
+        .button {
+            display: block;
+            margin-top: 20px;
+            text-align: center;
+        }
+        .button a {
+            text-decoration: none;
+            padding: 12px 20px;
+            background-color: #2786df;
+            color: white;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: bold;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+        .button a:hover {
+            background-color: #1a79d1; /* Verde más oscuro en hover */
+            transform: translateY(-2px); /* Efecto de deslizamiento hacia arriba */
+        }
+        .button a:active {
+            background-color: #4d8bdd; /* Verde aún más oscuro en click */
+            transform: translateY(0); /* Elimina el efecto de deslizamiento */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Detalle del Cliente</h1>
+        <div class="field">
+            <div class="label">ID Cliente:</div>
+            <div class="value"><%= cliente.id_client %></div>
+        </div>
+        <div class="field">
+            <div class="label">Nombre:</div>
+            <div class="value"><%= cliente.nombre %></div>
+        </div>
+        <div class="field">
+            <div class="label">Apellido:</div>
+            <div class="value"><%= cliente.apellido %></div>
+        </div>
+        <div class="field">
+            <div class="label">Dirección:</div>
+            <div class="value"><%= cliente.direccion %></div>
+        </div>
+        <div class="field">
+            <div class="label">Fecha de Nacimiento:</div>
+            <div class="value"><%= cliente.fecha_nacimiento.toISOString().split('T')[0] %></div>
+        </div>
+        <div class="field">
+            <div class="label">Teléfono:</div>
+            <div class="value"><%= cliente.telefono %></div>
+        </div>
+        <div class="field">
+            <div class="label">Email:</div>
+            <div class="value"><%= cliente.email %></div>
+        </div>
+        <div class="button">
+            <a href="/api/client">
+                Regresar
+            </a>
+        </div>
+    </div>
+</body>
+</html>

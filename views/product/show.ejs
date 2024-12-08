@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalle del Producto</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .field {
+            margin-bottom: 15px;
+        }
+        .field strong {
+            display: block;
+            font-size: 1.1em;
+            color: #555;
+        }
+        .actions {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .btn-regresar {
+            display: inline-block;
+            text-decoration: none;
+            background-color: #3498db; /* Azul profesional */
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            border: none;
+            cursor: pointer;
+        }
+        .btn-regresar:hover {
+            background-color: #2471a3; /* Azul más oscuro */
+            transform: scale(1.05); /* Pequeña ampliación al pasar el cursor */
+        }
+        .btn-regresar:active {
+            transform: scale(0.95); /* Efecto al presionar */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Detalle del Producto</h1>
+        
+        <!-- Mostrar los datos del producto -->
+        <div class="field">
+          <strong>ID Producto:</strong> <%= producto.id_producto %>
+        </div>
+        <div class="field">
+            <strong>Nombre:</strong> <%= producto.nombre %>
+        </div>
+        <div class="field">
+            <strong>Precio:</strong> $<%= producto.precio.toFixed(2) %>
+        </div>
+        <div class="field">
+            <strong>Stock:</strong> <%= producto.stock %>
+        </div>
+
+        <!-- Botón para regresar -->
+        <div class="actions">
+            <a href="/api/product" class="btn-regresar">Regresar</a>
+        </div>
+    </div>
+</body>
+</html>
